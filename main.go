@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "example.com/app"
 
+func main() {
+	app.StartApp()
 }
