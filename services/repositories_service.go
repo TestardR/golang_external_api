@@ -7,6 +7,7 @@ import (
 	"example.com/config"
 	"example.com/domain/github"
 	"example.com/domain/repositories"
+	"example.com/log"
 	"example.com/providers/github_provider"
 	"example.com/utils/errors"
 )
@@ -37,12 +38,15 @@ func (s *reposService) CreateRepo(input repositories.CreateRepoRequest) (*reposi
 		Private:     false,
 	}
 
+	log.Info("about to send request to external api", "status:pending")
 	response, err := github_provider.CreateRepo(config.GetGithubAccessToken(), request)
 
 	if err != nil {
+		log.Error("about to send request to external api", err, "status:error")
 		return nil, errors.NewApiError(err.StatusCode, err.Message)
 	}
 
+	log.Info("about to send request to external api", "status:success")
 	result := repositories.CreateRepoResponse{
 		Id:    response.Id,
 		Name:  response.Name,
