@@ -3,7 +3,6 @@ package errors
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 )
 
@@ -63,7 +62,6 @@ func NewApiErrFromBytes(body []byte) (ApiError, error) {
 	var result apiError
 
 	if err := json.Unmarshal(body, &result); err != nil {
-		fmt.Println("YOOOOOLOOOO", err)
 		return nil, errors.New("invalid json body")
 	}
 
